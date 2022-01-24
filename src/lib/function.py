@@ -23,23 +23,7 @@ def gaussian(fp, coord_list, center):
 
 def objective_function(fitting_params, coord, center, fcalc):
     err = fcalc - gaussian(fitting_params, coord, center)
-    print(f'error = {sum(err)}')
     return err
-
-
-def calculation_center(intensity, rlv):
-    return intensity.h * rlv[0] + intensity.k * rlv[1] + intensity.l * rlv[2]
-
-
-def pickup_back(intensity):
-    value_list, coord_list = [], []
-    for bc in intensity.back_contents_list:
-        value, coord = bc.pick_up_value_coord()
-        value_list.append(value)
-        coord_list.append(coord)
-    return value_list, coord_list
-
-
 
 
 #
