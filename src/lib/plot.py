@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
-from function import laue
+from function import gaussian, gaussian_1dim, gaussian_2dim
+import numpy as np
 
 
 def plot_all(intensities, reciprocal_lattice_vector):
@@ -56,42 +55,123 @@ def f_calc_plot(intensities, reciprocal_lattice_vector):
         value.append(intensity_value)
 
     fig = plt.figure()
+    # plt.rcParams['axes.facecolor'] = 'black'
+
     ax = fig.add_subplot(projection='3d')
+    # ax.tick_params(labelbottom=False,
+    #                labelleft=False,
+    #                labelright=False,
+    #                labeltop=False)
+    # ax.tick_params(bottom=False,
+    #                left=False,
+    #                right=False,
+    #                top=False)
+    # ax.axis("off")
 
     ax.set_title('Fcalc')
 
     print(f'x min:{min(x)}, max:{max(x)}')
     print(f'y min:{min(y)}, max:{max(y)}')
     print(f'z min:{min(z)}, max:{max(z)}')
+    print(f'max: {max(value)}')
 
     ax.set_xlabel("a", size=15, color="black")
     ax.set_ylabel("b", size=15, color="black")
     ax.set_zlabel("z", size=15, color="black")
 
-    ax.scatter(x, z, value, c=value, cmap="gray")
+    ax.scatter(x, y, z, c=value, cmap="gray")
     plt.show()
 
 
-def plot_laue_function(scat_vec):
-    fig = plt.figure()
-    ax = Axes3D(fig)
+def draw_laue(scat_vec, fcalc, params):
+    a, b, c, d, e = params[0]
+    x = []
+    for sv in scat_vec:
+        x.append(sv[0])
+    y = np.array(f_fit(scat_vec, d, e) * laue(scat_vec, a, b, c))
+    # y = np.multiply(fcalc, d)
 
-    x, y, z, fcalc = [], [], [], []
-    for i in range(-10, 10, 1):
-        for j in range(-10, 10, 1):
-            for k in range(-10, 10, 1):
-                x.append(i)
-                y.append(j)
-                z.append(k)
-                fcalc.append(laue(scat_vec))
+    print(len(x), len(y))
+    plt.scatter(x, y)
+    plt.show()
 
-    ax.set_xlabel("a", size=15, color="black")
-    ax.set_ylabel("b", size=15, color="black")
-    ax.set_zlabel("c", size=15, color="black")
 
-    # p = np.linspace(-10, 10, 50)
-    # plt.plot(p, [laue(Crystal.Na.value, Crystal.Nb.value, Crystal.Nc.value, scat_vec, k, k, k) for k in p])
-    # plt.show()
+def draw_laue_r(scat_vec, fcalc, params):
+    a, b, c, d, e = params[0]
+    fig, ax = plt.subplots()
+    # x 軸のラベルを設定する。
+    ax.set_xlabel("r")
 
-    ax.scatter(x, y, z, c=fcalc, cmap="coolwarm")
+    # y 軸のラベルを設定する。
+    ax.set_ylabel("fcalc")
+    x = []
+    for sv in scat_vec:
+        x.append(np.sqrt(sv[0] * sv[0] + sv[1] * sv[1] + sv[2] * sv[2]))
+    y = fcalc
+    # y = np.array(f_fit(scat_vec, d, e) * laue(scat_vec, a, b, c))
+
+    print(len(x), len(y))
+    plt.scatter(x, y)
+    plt.show()
+
+
+def draw_fcalc(scat_vec, fcalc):
+    x = []
+    for sv in scat_vec:
+        x.append(sv[0])
+    y = fcalc
+    plt.scatter(x, y)
+
+    plt.show()
+
+
+def draw_gauss(d, e):
+    x = np.array([i/100 for i in range(-150, 151)])
+    result = gaussian(x, d, e)
+    plt.plot(x, result)
+    plt.show()
+
+
+def draw_gaussian_1dim(result, coord_list, fcalc_list, center):
+    x = np.array([i / 100 for i in range(-150, 151)])
+    y = gaussian_1dim(result[0], x, center)
+
+    coord_x_list = [c[0] for c in coord_list]
+    plt.plot(x, y)
+    plt.scatter(coord_x_list, fcalc_list)
+    plt.show()
+
+
+def draw_gaussian_2dim(result, coord_list, fcalc_list, center):
+    print(coord_list)
+    # Figureと3DAxeS
+    fig = plt.figure(figsize=(8, 8))
+    ax = fig.add_subplot(111, projection="3d")
+
+    # 軸ラベルを設定
+    ax.set_xlabel("x", size=16)
+    ax.set_ylabel("y", size=16)
+    ax.set_zlabel("fcalc", size=16)
+
+    # (x,y)データを作成
+    x = np.array([i / 1000 for i in range(-50, 51)])
+    y = np.array([i / 1000 for i in range(80, 131)])
+
+    # 格子点を作成
+    X, Y = np.meshgrid(x, y)
+
+    # 高度の計算式
+    Z = gaussian_2dim(result[0], X, Y, center)
+
+    # 曲面を描画
+    ax.plot_surface(X, Y, Z, color=(0.4, 0.4, 0.9, 0.8))
+
+    # 底面に等高線を描画
+    # ax.contour(X, Y, Z, colors="black", offset=-1)
+
+    cx = [c[0] for c in coord_list]
+    cy = [c[1] for c in coord_list]
+
+    ax.scatter(cx, cy, fcalc_list, color='black')
+
     plt.show()

@@ -6,7 +6,7 @@ class Intensity:
         self.background = 0
         self.ratio = 0
         self.i_b = 0
-        self.back_contents_list = []
+        self.back_contents_list = []  # 近傍6方向ボクセルの値 BackContentsのリスト
 
     def set_back_contents_list(self, string):
         back_contents_list = []
@@ -25,3 +25,6 @@ class BackContents:
         self.y = y
         self.z = z
         self.value = value
+
+    def pick_up_value_coord(self):
+        return self.value, [self.x, self.y, self.z]
