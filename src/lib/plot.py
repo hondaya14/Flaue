@@ -5,7 +5,9 @@ import numpy as np
 
 # estimate resultの描画
 def draw_result(estimate_result):
-    fig = plt.figure(figsize=(10, 10))
+    window_title = f'Result[{estimate_result.index}] (h, k, l)=' \
+                   f'({estimate_result.intensity.h},{estimate_result.intensity.k},{estimate_result.intensity.l})'
+    fig = plt.figure(num=window_title, figsize=(10, 10))
     ax = fig.add_subplot(projection="3d")
 
     xi, yi = 0, 2  # X, Y, Z = 0, 1, 2
@@ -32,8 +34,6 @@ def draw_result(estimate_result):
 
     x = np.array([i / 1000 for i in range(range_cx_l, range_cx_r)])
     y = np.array([i / 1000 for i in range(range_cy_l, range_cy_r)])
-    print(f'x: {range_cx_l/1000} 〜 {range_cx_r/1000}')
-    print(f'y: {range_cy_l/1000} 〜 {range_cy_r/1000}')
 
     # 格子点を作成
     X, Y = np.meshgrid(x, y)
