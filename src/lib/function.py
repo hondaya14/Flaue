@@ -6,9 +6,9 @@ def gaussian_1dim(fp, x, center):
     return fp[0] * np.exp(-(np.power(x-center[0], 2)) / fp[1])
 
 
-def gaussian_2dim(fp, x, y, center):
-    return fp[0] * np.exp(-(np.power(x-center[0], 2) +
-                            np.power(y-center[1], 2)) / fp[1])
+def gaussian_2dim(fp, x, y, center, xi, yi):
+    return fp[0] * np.exp(-(np.power(x-center[xi], 2) +
+                            np.power(y-center[yi], 2)) / fp[1])
 
 
 def gaussian(fp, coord_list, center):

@@ -8,14 +8,16 @@ def draw_result(estimate_result):
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(projection="3d")
 
-    # 軸ラベルを設定
-    ax.set_xlabel("x", size=16)
-    ax.set_ylabel("y", size=16)
-    ax.set_zlabel("Fcalc", size=16)
+    xi, yi = 0, 2  # X, Y, Z = 0, 1, 2
+    label = ['x', 'y', 'z']
 
-    # (x,y)データを作成
-    cx = [c[0] for c in estimate_result.coord_list]
-    cy = [c[1] for c in estimate_result.coord_list]
+    # 軸ラベルを設定
+    ax.set_xlabel(label[xi], size=16)
+    ax.set_ylabel(label[yi], size=16)
+    ax.set_zlabel('Fcalc', size=16)
+
+    cx = [c[xi] for c in estimate_result.coord_list]
+    cy = [c[yi] for c in estimate_result.coord_list]
 
     cx_min, cx_max = min(cx), max(cx)
     cy_min, cy_max = min(cy), max(cy)
@@ -37,7 +39,7 @@ def draw_result(estimate_result):
     X, Y = np.meshgrid(x, y)
 
     # 高度の計算式
-    Z = gaussian_2dim(estimate_result.fitting_param[1], X, Y, estimate_result.center)
+    Z = gaussian_2dim(estimate_result.fitting_param[1], X, Y, estimate_result.center, xi, yi)
 
     # 曲面を描画
     ax.plot_surface(X, Y, Z, color=(0.4, 0.4, 0.9, 0.8))
@@ -162,7 +164,7 @@ def draw_result(estimate_result):
 #     plt.plot(x, result)
 #     plt.show()
 #
-# 
+#
 # def draw_gaussian_1dim(result, coord_list, fcalc_list, center):
 #     x = np.array([i / 100 for i in range(-150, 151)])
 #     y = gaussian_1dim(result[0], x, center)
