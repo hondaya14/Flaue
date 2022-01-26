@@ -1,3 +1,5 @@
+import numpy as np
+
 
 class Intensity:
     def __init__(self):
@@ -33,7 +35,9 @@ class Intensity:
             value, coord = bc.pick_up_value_coord()
             value_list.append(value)
             coord_list.append(coord)
-        return value_list, coord_list
+        value_list.append(self.intensity)
+        coord_list.append(self.intensity_coord)
+        return np.array(value_list), np.array(coord_list)
 
 
 class BackContents:
