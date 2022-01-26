@@ -34,11 +34,12 @@ def main(intensity_file_path):
 
         estimate_result.fcalc_fit_list = gaussian(result[0], coord, center)
 
-        estimate_result.print_result()
         estimate_results.append(estimate_result)
         index += 1
 
-    # draw_gaussian_2dim(result, coord, fcalc, center)
+    show_index = 100
+    estimate_results[show_index].print_result()
+    draw_result(estimate_results[show_index])
 
 
 if __name__ == "__main__":
