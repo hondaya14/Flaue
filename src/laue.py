@@ -16,6 +16,7 @@ def main(intensity_file_path):
     # 強度とその周辺値で強度補正
     for intensity in intensities:
         estimate_result = EstimateResult()
+        estimate_result.intensity = intensity
         center = intensity.calculation_center(reciprocal_lattice_vector)
         estimate_result.center = center
 
