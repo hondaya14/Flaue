@@ -3,14 +3,16 @@ from src.lib.intensity import Intensity
 
 class EstimateResult:
     def __init__(self):
+        self.index = None
         self.intensity = Intensity()
-        self.center = []
-        self.fcalc_list = []
-        self.coord_list = []
-        self.fitting_param = []  # [0]: initial, [1]: finally
-        self.fcalc_fit_list = []
+        self.center = None
+        self.fcalc_list = None
+        self.coord_list = None
+        self.fitting_param = None  # [0]: initial, [1]: finally
+        self.fcalc_fit_list = None
 
     def print_result(self):
+        print(f'Estimate Result [{self.index}]')
         print(f'h: {self.intensity.h}, k: {self.intensity.k}, l: {self.intensity.l}')
         print(f'center ... {self.center}')
         print(f'fit prm (init) ... {self.fitting_param[0]}')

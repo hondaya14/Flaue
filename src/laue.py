@@ -14,8 +14,10 @@ def main(intensity_file_path):
 
     estimate_results = []
     # 強度とその周辺値で強度補正
+    index = 0
     for intensity in intensities:
         estimate_result = EstimateResult()
+        estimate_result.index = index
         estimate_result.intensity = intensity
         center = intensity.calculation_center(reciprocal_lattice_vector)
         estimate_result.center = center
@@ -34,6 +36,7 @@ def main(intensity_file_path):
 
         estimate_result.print_result()
         estimate_results.append(estimate_result)
+        index += 1
 
     # draw_gaussian_2dim(result, coord, fcalc, center)
 
