@@ -42,9 +42,9 @@ def draw_result(estimate_result):
     Z = gaussian_2dim(estimate_result.fitting_param[1], X, Y, estimate_result.center, xi, yi)
 
     # 曲面を描画
-    ax.plot_surface(X, Y, Z, color=(0.4, 0.4, 0.9, 0.8))
+    ax.plot_surface(X, Y, Z, color=(0.6, 0.6, 0.6, 0.8))
 
-    ax.scatter(cx, cy, estimate_result.fcalc_list, color='black')
+    ax.scatter(cx, cy, estimate_result.fcalc_list, color='red')
 
     plt.show()
 
