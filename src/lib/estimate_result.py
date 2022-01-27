@@ -26,3 +26,6 @@ class EstimateResult:
             print(f'{str(self.fcalc_list[i]).rjust(8)}\t{round(self.fcalc_fit_list[i], 6)}')
         print(f'\nFcalc(est) = {self.fitting_param[1][0]}')
         print(f'--------------------------------------------------------')
+
+    def fest(self):
+        return self.fitting_param[1][0]

@@ -1,11 +1,12 @@
 import sys
-from lib.utils import read_data
+from lib.utils import read_data, read_fobs
 from lib.reciprocal import calc_reciprocal_lattice_vector
 from lib.plot import *
 from lib.function import *
 from scipy.optimize import leastsq
 
 from src.lib.estimate_result import EstimateResult
+from src.lib.r_factor import calculate_r_factor
 
 
 def main(intensity_file_path):
@@ -37,9 +38,13 @@ def main(intensity_file_path):
         estimate_results.append(estimate_result)
         index += 1
 
-    show_index = 100
-    estimate_results[show_index].print_result()
-    draw_result(estimate_results[show_index])
+    # show_index = 4
+    # estimate_results[show_index].print_result()
+    # draw_result(estimate_results[show_index])
+
+    fobs_data = read_fobs('/Users/honda/Repositories/lab/Flaue/test_data/Fobs.hkl')
+    r_factor = calculate_r_factor(estimate_results, fobs_data)
+    print(r_factor)
 
 
 if __name__ == "__main__":

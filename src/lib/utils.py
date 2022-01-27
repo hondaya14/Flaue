@@ -1,4 +1,5 @@
 from intensity import Intensity, BackContents
+import sys
 
 
 def read_data(path):
@@ -19,3 +20,22 @@ def read_data(path):
             intensity.set_back_contents_list(''.join(contents[7:]))
             intensities.append(intensity)
         return intensities
+
+
+# return gt
+def read_fobs(path):
+    fobs_data = []
+    with open(file=path, mode='r') as f:
+        lines = f.readlines()
+        for line in lines:
+            h, k, l, *values = line.split()
+            h, k, l = map(int, [h, k, l])
+            fcalc_crys_squared, fobs_squared, f_sigma_squared = map(float, values[:-1])
+            if fobs_squared > 2 * f_sigma_squared:
+                fobs_data.append([h, k, l, fcalc_crys_squared, fobs_squared, f_sigma_squared, int(f'{h}{k}{l}')])
+    fobs_data.sort(key=lambda x: x[-1])
+    return fobs_data
+
+
+if __name__ == '__main__':
+    read_fobs(sys.argv[1])
