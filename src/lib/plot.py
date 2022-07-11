@@ -10,7 +10,7 @@ def draw_result(estimate_result):
     fig = plt.figure(num=window_title, figsize=(10, 10))
     ax = fig.add_subplot(projection="3d")
 
-    xi, yi = 0, 2  # X, Y, Z = 0, 1, 2
+    xi, yi = 0, 1  # X, Y, Z = 0, 1, 2
     label = ['x', 'y', 'z']
 
     # 軸ラベルを設定
@@ -48,6 +48,45 @@ def draw_result(estimate_result):
 
     plt.show()
 
+
+def draw_distance_fcalc_fobs(d, fcalc_fobs, ylabel):
+    fig, ax = plt.subplots()
+    ax.set_xlabel("reciprocal space distance")
+    ax.set_ylabel(ylabel)
+    plt.scatter(d, fcalc_fobs)
+    plt.axhline(y=0, color='red')
+    plt.show()
+
+
+def draw_scatter(a, b, label_a, label_b):
+    fig, ax = plt.subplots()
+    ax.set_xlabel(label_a)
+    ax.set_ylabel(label_b)
+    plt.ylim(0, 2.5)
+    plt.scatter(a, b)
+    # plt.axhline(y=0, color='red')
+    plt.show()
+
+
+def draw_scatter_compare(a, b, c, label_a, label_b):
+    fig, ax = plt.subplots()
+    ax.set_xlabel(label_a)
+    ax.set_ylabel(label_b)
+    # plt.ylim(0, 2.5)
+    plt.scatter(a, b, color=(0.2, 0.2, 1.0, 0.75))
+    plt.scatter(a, c, color=(1.0, 0.2, 0.2, 0.75))
+    plt.show()
+
+
+def draw_scatter_compare3(a, b, c, d, label_a, label_b):
+    fig, ax = plt.subplots()
+    ax.set_xlabel(label_a)
+    ax.set_ylabel(label_b)
+    # plt.ylim(0, 2.5)
+    plt.scatter(a, b, color=(0.2, 0.2, 1.0, 0.75))
+    plt.scatter(a, c, color=(1.0, 0.2, 0.2, 0.75))
+    plt.scatter(a, d, color=(0.2, 1.0, 0.2, 0.75))
+    plt.show()
 
 # def plot_all(intensities, reciprocal_lattice_vector):
 #     x, y, z, value = [], [], [], []

@@ -15,6 +15,10 @@ class Intensity:
     def calculation_center(self, rlv):
         return self.h * rlv[0] + self.k * rlv[1] + self.l * rlv[2]
 
+    def calc_coord(self, rlv):
+        vector = self.h * rlv[0] + self.k * rlv[1] + self.l * rlv[2]
+        return np.sqrt(np.power(vector[0], 2) + np.power(vector[1], 2) + np.power(vector[2], 2))
+
     def set_intensity_coord(self, string):
         list_contents = string.split(':')[1].replace('[', '').replace(']', '').split(',')
         self.intensity_coord = list(map(float, list_contents))

@@ -1,3 +1,5 @@
+import numpy as np
+
 from intensity import Intensity, BackContents
 import sys
 
@@ -32,8 +34,8 @@ def read_fobs(path):
             h, k, l = map(int, [h, k, l])
             fcalc_crys_squared, fobs_squared, f_sigma_squared = map(float, values[:-1])
             if fobs_squared > 2 * f_sigma_squared:
-                fobs_data.append([h, k, l, fcalc_crys_squared, fobs_squared, f_sigma_squared, int(f'{h}{k}{l}')])
-    fobs_data.sort(key=lambda x: x[-1])
+                fobs_data.append([h, k, l, np.sqrt(fcalc_crys_squared), np.sqrt(fobs_squared), f_sigma_squared, int(f'{h}{k}{l}')])
+    # fobs_data.sort(key=lambda x: x[-1])
     return fobs_data
 
 
